@@ -15,7 +15,7 @@ def main():
     dl_parser.add_argument('url', help='The url of the islandora instance ex: "https://islandnewspapers.ca/islandora"')
     dl_parser.add_argument('-c', '--count', type=int, default=20, help='The number of results to pull from')
     dl_parser.add_argument('-q', '--query', default='', help='The term to search for when downloading issues')
-    dl_parser.add_argument('-l', '--light_weight', help='Download pages without OBJ')
+    dl_parser.add_argument('-l', '--light_weight', action='store_true', help='Download pages without OBJ')
 
     pr_parser = sub_parsers.add_parser('prep')
     pr_parser.add_argument('-f', '--format', choices=['dir', 'zip'], default='dir',

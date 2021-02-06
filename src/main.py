@@ -8,7 +8,7 @@ import argparse
 
 def main():
     base_parser = argparse.ArgumentParser()
-    base_parser.add_argument('-o', '--output_dir', help='The directory to save files in')
+    base_parser.add_argument('-d', '--dest', help='The directory to save files in')
     sub_parsers = base_parser.add_subparsers(required=True, dest='command')
 
     dl_parser = sub_parsers.add_parser('download')
@@ -18,25 +18,30 @@ def main():
     dl_parser.add_argument('-l', '--light_weight', action='store_true', help='Download pages without OBJ')
 
     pr_parser = sub_parsers.add_parser('prep')
-    pr_parser.add_argument('-f', '--format', choices=['dir', 'zip'], default='dir',
+    pr_parser.add_argument('-i', '--issues', choices=['dir', 'zip'], default='dir',
                            help='The format to save the issues in.')
-    pr_parser.add_argument('-i', '--input', default='data/download')
+    pr_parser.add_argument('-n', '--newspapers', choices=['zip', 'marcxml'], default='zip',
+                           help='The format to save the newspapers in.')
+    pr_parser.add_argument('-s', '--source', default='data/download')
 
     args = base_parser.parse_args()
 
-    output = args.output_dir
+    dest = args.dest
     if args.command == 'download':
         page_cm = newspapers.page_light_cm if args.light_weight else newspapers.page_cm
-        if output is None:
-            output = 'data/download'
-        utils.download(query=args.query, num=args.count, directory=output, url=args.url, page_cm=page_cm)
+        if dest is None:
+            dest = 'data/download'
+        utils.download(query=args.query, num=args.count, directory=dest, url=args.url, page_cm=page_cm)
     elif args.command == 'prep':
-        if output is None:
-            output = 'data/ingest'
-        ih = ImportHelper(ingest_dir=output, download_dir=args.input)
+        if dest is None:
+            dest = 'data/ingest'
+        ih = ImportHelper(ingest_dir=dest, download_dir=args.source)
         ih.load_dir()
-        ih.prep_papers()
-        ih.prep_issues(method=args.format)
+        if args.newspapers == 'zip':
+            ih.prep_papers_zip()
+        elif args.newspapers == 'marcxml':
+            ih.prep_papers_marc()
+        ih.prep_issues(method=args.issues)
     else:
         print('Invalid command')
 

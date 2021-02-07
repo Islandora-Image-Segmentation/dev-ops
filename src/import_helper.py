@@ -1,6 +1,8 @@
 import os
 import shutil
 import sys
+import tempfile
+from glob import glob
 
 from utils import mods_to_marcxml
 
@@ -29,7 +31,20 @@ class ImportHelper:
                 else:
                     self.issues.append(item)
 
-    def prep_papers(self):
+    def prep_papers_zip(self):
+        with tempfile.TemporaryDirectory() as tempDir:
+            for paper in self.papers:
+                shutil.copy(f'{self.download_dir}/{paper}/MODS.xml', f'{tempDir}/{paper}.xml')
+                # shutil.copy(f'{self.download_dir}/{paper}/TN.jpg', f'{tempDir}/{paper}.jpg')
+                try:
+                    tn_name = glob(f'{self.download_dir}/{paper}/TN.*')[0]
+                    ext = tn_name[tn_name.rfind('.'):]
+                    shutil.copy(tn_name, f'{tempDir}/{paper}{ext}')
+                except IndexError:
+                    print(f'Could not find thumbnail for: {paper}', file=sys.stderr)
+            shutil.make_archive(f'{self.ingest_dir}/newspapers', 'zip', tempDir)
+
+    def prep_papers_marc(self):
         if not os.path.exists(f'{self.ingest_dir}/newspapers'):
             os.mkdir(f'{self.ingest_dir}/newspapers')
         for paper in self.papers:

@@ -13,23 +13,21 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-usage: main.py [-h] [-o OUTPUT_DIR] {download,prep} ...
+usage: main.py [-h] [-d DEST] {download,prep} ...
 
 positional arguments:
   {download,prep}
 
 optional arguments:
   -h, --help            show this help message and exit
-  -o OUTPUT_DIR, --output_dir OUTPUT_DIR
-                        The directory to save files in
+  -d DEST, --dest DEST  The directory to save files in
 ```
 
 ```
-usage: main.py download [-h] [-c COUNT] [-q QUERY] [-l LIGHT_WEIGHT] url
+usage: main.py download [-h] [-c COUNT] [-q QUERY] [-l] url
 
 positional arguments:
-  url                   The url of the islandora instance ex:
-                        "https://islandnewspapers.ca/islandora"
+  url                   The url of the islandora instance ex: "https://islandnewspapers.ca/islandora"
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -37,16 +35,17 @@ optional arguments:
                         The number of results to pull from
   -q QUERY, --query QUERY
                         The term to search for when downloading issues
-  -l LIGHT_WEIGHT, --light_weight LIGHT_WEIGHT
-                        Download pages without OBJ
+  -l, --light_weight    Download pages without OBJ
 ```
 
 ```
-usage: main.py prep [-h] [-f {dir,zip}] [-i INPUT]
+usage: main.py prep [-h] [-i {dir,zip}] [-n {zip,marcxml}] [-s SOURCE]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -f {dir,zip}, --format {dir,zip}
+  -i {dir,zip}, --issues {dir,zip}
                         The format to save the issues in.
-  -i INPUT, --input INPUT
+  -n {zip,marcxml}, --newspapers {zip,marcxml}
+                        The format to save the newspapers in.
+  -s SOURCE, --source SOURCE
 ```

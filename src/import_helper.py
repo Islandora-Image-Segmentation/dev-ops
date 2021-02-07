@@ -68,11 +68,11 @@ class ImportHelper:
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
             try:
-                shutil.copy(f'{self.download_dir}/{page_id}/OBJ.tiff', dest_dir)
                 shutil.copy(f'{self.download_dir}/{page_id}/JP2.jp2', dest_dir)
                 shutil.copy(f'{self.download_dir}/{page_id}/TN.jpg', dest_dir)
                 shutil.copy(f'{self.download_dir}/{page_id}/OCR.txt', dest_dir)
                 shutil.copy(f'{self.download_dir}/{page_id}/HOCR.html', dest_dir)
+                shutil.copy(f'{self.download_dir}/{page_id}/OBJ.tiff', dest_dir)
             except FileNotFoundError:
                 try:
                     print(f'Could not find file: {self.download_dir}/{page_id}/OBJ.tiff', file=sys.stderr)

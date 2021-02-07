@@ -20,7 +20,7 @@ def main():
     pr_parser = sub_parsers.add_parser('prep')
     pr_parser.add_argument('-i', '--issues', choices=['dir', 'zip'], default='dir',
                            help='The format to save the issues in.')
-    pr_parser.add_argument('-n', '--newspapers', choices=['zip', 'marcxml'], default='zip',
+    pr_parser.add_argument('-n', '--newspapers', choices=['dir', 'zip', 'marcxml'], default='dir',
                            help='The format to save the newspapers in.')
     pr_parser.add_argument('-s', '--source', default='data/download')
 
@@ -37,7 +37,9 @@ def main():
             dest = 'data/ingest'
         ih = ImportHelper(ingest_dir=dest, download_dir=args.source)
         ih.load_dir()
-        if args.newspapers == 'zip':
+        if args.newspapers == 'dir':
+            ih.prep_papers_dir()
+        elif args.newspapers == 'zip':
             ih.prep_papers_zip()
         elif args.newspapers == 'marcxml':
             ih.prep_papers_marc()

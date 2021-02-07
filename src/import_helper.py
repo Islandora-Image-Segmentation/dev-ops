@@ -33,16 +33,23 @@ class ImportHelper:
 
     def prep_papers_zip(self):
         with tempfile.TemporaryDirectory() as tempDir:
-            for paper in self.papers:
-                shutil.copy(f'{self.download_dir}/{paper}/MODS.xml', f'{tempDir}/{paper}.xml')
-                # shutil.copy(f'{self.download_dir}/{paper}/TN.jpg', f'{tempDir}/{paper}.jpg')
-                try:
-                    tn_name = glob(f'{self.download_dir}/{paper}/TN.*')[0]
-                    ext = tn_name[tn_name.rfind('.'):]
-                    shutil.copy(tn_name, f'{tempDir}/{paper}{ext}')
-                except IndexError:
-                    print(f'Could not find thumbnail for: {paper}', file=sys.stderr)
+            self._save_papers_to_dir(tempDir)
             shutil.make_archive(f'{self.ingest_dir}/newspapers', 'zip', tempDir)
+
+    def prep_papers_dir(self):
+        dest_dir = f'{self.ingest_dir}/newspapers'
+        os.mkdir(dest_dir)
+        self._save_papers_to_dir(dest_dir)
+
+    def _save_papers_to_dir(self, dest_dir):
+        for paper in self.papers:
+            shutil.copy(f'{self.download_dir}/{paper}/MODS.xml', f'{dest_dir}/{paper}.xml')
+            try:
+                tn_name = glob(f'{self.download_dir}/{paper}/TN.*')[0]
+                ext = tn_name[tn_name.rfind('.'):]
+                shutil.copy(tn_name, f'{dest_dir}/{paper}{ext}')
+            except IndexError:
+                print(f'Could not find thumbnail for: {paper}', file=sys.stderr)
 
     def prep_papers_marc(self):
         if not os.path.exists(f'{self.ingest_dir}/newspapers'):

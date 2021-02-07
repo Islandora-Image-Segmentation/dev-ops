@@ -52,6 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   shared_dir = "/vagrant"
+  data_dir = "/data"
   # Moves Islandora 7.x to ipaddress instead of localhost.
   unless  $multiple_vms.eql? "FALSE"
      unless Vagrant.has_plugin?("vagrant-hostsupdater")
@@ -63,10 +64,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, path: "./vagrant/scripts/islandora_modules.sh", :args => shared_dir, :privileged => false
   config.vm.provision :shell, path: "./vagrant/scripts/islandora_libraries.sh", :args => shared_dir, :privileged => false
+  config.vm.provision :shell, path: "./vagrant/scripts/ingest.sh", :args => [shared_dir, data_dir], :privileged => false
   if File.exist?("./scripts/custom.sh") then
     config.vm.provision :shell, path: "./scripts/custom.sh", :args => shared_dir
   end
-  config.vm.provision :shell, path: "./vagrant/scripts/post.sh"
+#   config.vm.provision :shell, path: "./vagrant/scripts/post.sh"
 
   unless  $multiple_vms.eql? "FALSE"
     # Fires last to modify one last change.

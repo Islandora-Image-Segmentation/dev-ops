@@ -136,3 +136,7 @@ dmypy.json
 
 #vscode
 .vscode/
+
+# vagrant
+.vagrant/
+package.box

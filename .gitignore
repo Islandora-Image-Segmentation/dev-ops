@@ -139,3 +139,4 @@ dmypy.json
 
 # vagrant
 .vagrant/
+package.box

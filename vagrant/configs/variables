@@ -22,3 +22,10 @@ DRUPAL_HOME="/var/www/drupal"
 
 # Uncomment next line to enable Cantaloupe as Image Server
 # CANTALOUPE_SETUP="TRUE"
+
+GHOSTSCRIPT_VERSION=9.23
+
+CANTALOUPE_HOME="/usr/local/cantaloupe"
+CANTALOUPE_LOGS="/var/log/cantaloupe"
+CANTALOUPE_CACHE="/var/cache/cantaloupe"
+CANTALOUPE_VERSION=3.4.2

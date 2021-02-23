@@ -13,7 +13,7 @@ cd "$DRUPAL_HOME" || exit
 
 drush -u 1  islandora_batch_scan_preprocess \
    --type=directory \
-   --target=$DATA_DIR/newspapers \
+   --scan_target=$DATA_DIR/newspapers \
    --content_models=islandora:newspaperCModel \
    --parent=islandora:newspaper_collection \
    --namespace=newspapers \
@@ -25,7 +25,7 @@ do
   echo $i
   drush -u 1  islandora_newspaper_batch_preprocess \
     --type=directory \
-    --target=$DATA_DIR/$i \
+    --scan_target=$DATA_DIR/$i \
     --parent=newspapers:1 \
     --namespace=$i  \
     --do_not_generate_ocr \

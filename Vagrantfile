@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
   config.vm.provider "virtualbox" do |v|
-    v.name = "Islandora 7.x-1.x Newspaper Development VM"
+    v.name = "Islandora 7.x-1.x Newspaper Development Base VM"
 
   config.vm.synced_folder "./", "/vagrant", disabled:true
   config.vm.synced_folder "data/ingest/", "/data"
@@ -26,12 +26,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = $hostname
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "islandora/islandora-base"
+  config.vm.box = "ubuntu/xenial64"
 
-  # This is a RC VM, So make sure people are running the latest base box by April 2018
-  # Which will include cantaloupe IIIF Image Server
-   config.vm.box_version = "1.0.9"
-   config.vm.box_check_update = true
 
   # This checks and updates VirtualBox Guest Additions.
    if Vagrant.has_plugin?("vagrant-vbguest")
@@ -61,6 +57,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      config.vm.network :private_network, ip: "33.33.33.10"
 
    end
+
+  config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
+  config.vm.provision :shell, path: "./vagrant/scripts/java.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/bootstrap.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/devtools.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/fits.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/fcrepo.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/djatoka.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/solr.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/gsearch.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/drupal.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/tesseract.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/ffmpeg.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/warctools.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/sleuthkit.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/cantaloupe.sh", :args => shared_dir
+  config.vm.provision :shell, path: "./vagrant/scripts/post-base.sh"
 
   config.vm.provision :shell, path: "./vagrant/scripts/islandora_modules.sh", :args => shared_dir, :privileged => false
   config.vm.provision :shell, path: "./vagrant/scripts/islandora_libraries.sh", :args => shared_dir, :privileged => false

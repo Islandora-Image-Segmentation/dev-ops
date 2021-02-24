@@ -1,6 +1,9 @@
 # Custom
 data/*
 
+# JDK tar file
+vagrant/jdk*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

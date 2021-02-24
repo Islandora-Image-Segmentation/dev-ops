@@ -49,3 +49,11 @@ optional arguments:
                         The format to save the newspapers in.
   -s SOURCE, --source SOURCE
 ```
+
+# Islandora newspaper base box vagrant
+
+## Usage
+- Requires [Vagrant](https://www.vagrantup.com/downloads) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- [***Download the java 8 JDK from Oracle***](https://www.oracle.com/ca-en/java/technologies/javase/javase-jdk8-downloads.html) and place it in the `vagrant` directory.
+- Run `vagrant up`
+- To create a reusable package run `vagrant package`

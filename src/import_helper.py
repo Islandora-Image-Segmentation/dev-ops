@@ -21,7 +21,7 @@ class ImportHelper:
         self.issues = []
         self.pages = []
         for item in items:
-            col_split = item.split(':')
+            col_split = item.split('_')
             if len(col_split) > 1:
                 p_split = col_split[-1].split('-')
                 if item.startswith('newspapers:'):
@@ -61,14 +61,14 @@ class ImportHelper:
 
     def prep_issues(self, method: str = 'dir'):
         for issue_id in self.issues:
-            paper, issue = tuple(issue_id.split(':'))
+            paper, issue = tuple(issue_id.split('_'))
             dest_dir = f'{self.ingest_dir}/{paper}/{issue}'
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
             shutil.copy(f'{self.download_dir}/{issue_id}/MODS.xml', dest_dir)
 
         for page_id in self.pages:
-            paper, li = tuple(page_id.split(':'))
+            paper, li = tuple(page_id.split('_'))
             issue, page = tuple(li.split('-'))
             dest_dir = f'{self.ingest_dir}/{paper}/{issue}/{page}'
             print(dest_dir)
@@ -89,7 +89,7 @@ class ImportHelper:
                     print(f'Could not find file: Trying {self.download_dir}/{page_id}/JP2.jp2', file=sys.stderr)
 
         if method == 'zip':
-            paper_names = set([issue_id.split(':')[0] for issue_id in self.issues])
+            paper_names = set([issue_id.split('_')[0] for issue_id in self.issues])
             for paper in paper_names:
                 paper_path = f'{self.ingest_dir}/{paper}'
                 if os.path.exists(paper_path):

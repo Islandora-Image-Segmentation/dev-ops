@@ -54,7 +54,7 @@ class IslandoraObject(BaseModel):
             # print(self.obj_id, self.member_of)
 
     def save(self, directory: str = ''):
-        directory += '/' + self.obj_id
+        directory += '/' + self.obj_id.replace(':','_')
         if not os.path.exists(directory):
             os.mkdir(directory)
         for dsid, ds in self.ds.items():

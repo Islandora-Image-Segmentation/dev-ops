@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Islandora development</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/moon.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Islandora development</h1>
+</section>
+
+<section>
+<section id="developement-environement" class="title-slide slide level1">
+<h1>Developement environement</h1>
+
+</section>
+<section id="vagrant" class="slide level2">
+<h2>Vagrant</h2>
+<ul>
+<li>Easy way to manage virtual machines</li>
+<li>The <code>Vagrantfile</code> manages VM network and shared storage</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> up      <span class="co"># starts the vm</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> ssh     <span class="co"># ssh into the vm</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> halt    <span class="co"># shutsdown the machine</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> suspend <span class="co"># pauses the machine</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> resume  <span class="co"># brings the machine back from suspend  </span></span></code></pre></div>
+</section>
+<section id="vagrant-continued" class="slide level2">
+<h2>Vagrant continued</h2>
+<ul>
+<li>The working directory is mapped to <code>/var/www/drupal/modules/all/Islandora-Image-Solution-Pack/</code></li>
+<li>Islandora is available at localhost:8000</li>
+<li>Fedora and Solr at localhost:8080</li>
+<li>MySQL at localhost:3306</li>
+<li>If any of the ports are incorrect check the output of <code>vagrant up</code> for if any have changed.</li>
+</ul>
+</section>
+<section id="phpstorm" class="slide level2">
+<h2>PhpStorm</h2>
+<ul>
+<li>External Libraries</li>
+<li>External interpreter</li>
+<li>Drupal config</li>
+<li>Code style</li>
+</ul>
+</section>
+<section id="external-libraries" class="slide level2">
+<h2>External Libraries</h2>
+<ul>
+<li>Create a folder called <code>lib</code> outside of the git directory</li>
+<li>Clone Islandora, Drupal, tuque and the solution packs depencies into <code>lib</code></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">islandora</span> drupal tuque islandora_newspaper_batch islandora_ocr islandora_openseadragon islandora_paged_content islandora_solution_pack_large_image islandora_solution_pack_newspaper </span></code></pre></div>
+<ul>
+<li><a href="https://www.jetbrains.com/help/phpstorm/configuring-include-paths.html">Add <code>lib</code> to the include path of PhpStorm</a>
+<ul>
+<li><code>ctrl+alt+s</code> to open settings</li>
+<li>Languages &amp; Frameworks <span class="math inline">→</span> PHP</li>
+<li>Include paths <span class="math inline">→</span> <code>+</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="external-interpreter" class="slide level2">
+<h2><a href="https://www.jetbrains.com/help/phpstorm/configuring-remote-interpreters.html">External Interpreter</a></h2>
+<ul>
+<li><code>ctrl+alt+s</code> to open settings</li>
+<li>Languages &amp; Frameworks <span class="math inline">→</span> PHP</li>
+<li><em>CLI Interprepters</em> <span class="math inline">→</span> <code>+</code></li>
+<li>Select <em>vagrant</em></li>
+</ul>
+</section>
+<section id="drupal" class="slide level2">
+<h2>Drupal</h2>
+<ul>
+<li><code>ctrl+alt+s</code> to open settings</li>
+<li>Languages &amp; Frameworks <span class="math inline">→</span> PHP <span class="math inline">→</span> Frameworks</li>
+<li>Drupal <span class="math inline">→</span> Enable = True</li>
+<li>Drupal <span class="math inline">→</span> Path = where you cloned Drupal</li>
+<li>Drupal <span class="math inline">→</span> Version = 7</li>
+</ul>
+</section>
+<section id="code-style" class="slide level2">
+<h2>Code Style</h2>
+<ul>
+<li><code>ctrl+alt+s</code> to open settings</li>
+<li>Editor <span class="math inline">→</span> Code Style <span class="math inline">→</span> PHP</li>
+<li>Set from… <span class="math inline">→</span> Drupal</li>
+</ul>
+</section>
+<section id="drush" class="slide level2">
+<h2>Drush</h2>
+<ul>
+<li>A command-line utility for working with Drupal</li>
+<li>Should be run from the drupal directory</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">drush</span> cc all <span class="co"># clears all cache</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drush</span> en module_name <span class="co"># enables a module</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drush</span> dis module_name <span class="co"># disables a module</span></span></code></pre></div>
+</section>
+<section id="enable-manually" class="slide level2">
+<h2>Enable Manually</h2>
+<ul>
+<li>Browse to the instance</li>
+<li>Select Modules from the tool bar</li>
+<li>Find the module in the list, and enable</li>
+<li>Save configuration at the bottom of the page</li>
+</ul>
+</section></section>
+<section>
+<section id="basics" class="title-slide slide level1">
+<h1>Basics</h1>
+
+</section>
+<section id="objects" class="slide level2">
+<h2>Objects</h2>
+<ul>
+<li>Stored in fedora repository</li>
+<li>Have Persistent Identifiers(PID)</li>
+<li>Have Datastreams</li>
+<li>Have <a href="https://github.com/Islandora/islandora/wiki/Working-With-Fedora-Objects-Programmatically-Via-Tuque#properties-1">properties</a>:
+<ul>
+<li>id (PID): of the form <code>namespace:id</code></li>
+<li>label</li>
+<li>createdDate</li>
+<li>owner</li>
+<li>models</li>
+</ul></li>
+</ul>
+</section>
+<section id="datastreams" class="slide level2">
+<h2>Datastreams</h2>
+<ul>
+<li>All Islandora objects have the <code>RELS-EXT</code> and <code>DC</code> datastreams</li>
+<li>Most have <code>OBJ</code> and <code>MODS</code> datastreams</li>
+<li>Datastreams have the following <a href="https://github.com/Islandora/islandora/wiki/Working-With-Fedora-Objects-Programmatically-Via-Tuque#properties-2">properties</a>:
+<ul>
+<li>id (DSID, “datastream ID”)</li>
+<li>label</li>
+<li>checksum</li>
+<li>content</li>
+<li>mimetype</li>
+<li>versionable</li>
+</ul></li>
+</ul>
+</section>
+<section id="tuque" class="slide level2">
+<h2><a href="https://github.com/Islandora/islandora/wiki/Working-With-Fedora-Objects-Programmatically-Via-Tuque">Tuque</a></h2>
+<ul>
+<li>An API between PHP and Fedora</li>
+<li>Can be used to interact with Islandora objects</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">$object</span> = islandora_object_load<span class="ot">(</span><span class="kw">$pid</span><span class="ot">);</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">$label</span> = <span class="kw">$object</span>-&gt;label<span class="ot">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">$object</span>-&gt;relationships = <span class="kw">$relationships</span><span class="ot">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">$datastream</span> = <span class="kw">$object</span><span class="ot">[</span><span class="kw">$dsid</span><span class="ot">];</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> <span class="ot">(</span><span class="kw">$object</span> <span class="kw">as</span> <span class="kw">$datastream</span><span class="ot">)</span> {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$datastream</span>-&gt;content = <span class="kw">$my_new_content</span><span class="ot">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="hooks" class="slide level2">
+<h2>Hooks</h2>
+<ul>
+<li>Created by other modules</li>
+<li>Implemented by replacing <code>hook</code> with <code>my_module</code></li>
+<li>Many can be found in <a href=""><code>islandora.api.php</code></a></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hook_cool<span class="ot">(</span><span class="kw">$foo</span><span class="ot">)</span>{}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>my_module_cool<span class="ot">(</span><span class="kw">$foo</span><span class="ot">)</span>{}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>module_invoke_all<span class="ot">(</span><span class="st">&#39;cool&#39;</span><span class="ot">,</span> <span class="st">&#39;bar&#39;</span><span class="ot">);</span></span></code></pre></div>
+</section>
+<section id="solr" class="slide level2">
+<h2>SOLR</h2>
+<p>I don’t know much about it yet. But it’s used for searching.</p>
+</section></section>
+<section>
+<section id="structure" class="title-slide slide level1">
+<h1>Structure</h1>
+
+</section>
+<section id="general" class="slide level2">
+<h2>General</h2>
+<pre class="shell"><code>.
+├── image_segmentation.info
+├── image_segmentation.install
+├── image_segmentation.module
+├── includes
+│   ├── admin.form.inc
+│   └── derivatives.inc
+├── LICENSE
+├── README.md
+├── theme
+│   ├── image-segmentation-segment.tpl.php
+│   └── theme.inc
+└── xml
+│  └── content_models
+└── css
+│  └── *.css
+└── js
+   └── *.js
+</code></pre>
+</section>
+<section id="module.info" class="slide level2">
+<h2><code>module.info</code></h2>
+<p>Gives information to drupal about the module.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">name </span><span class="ot">=</span><span class="st"> Islandora Image Segmentation Solution Pack</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">description </span><span class="ot">=</span><span class="st"> &quot;An Islandora module to handle segmented newspaper pages&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span><span class="kw">[]</span><span class="dt"> </span><span class="ot">=</span><span class="st"> islandora</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span><span class="kw">[]</span><span class="dt"> </span><span class="ot">=</span><span class="st"> islandora_newspaper</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dt">package </span><span class="ot">=</span><span class="st"> Islandora Solution Packs</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="dt">version </span><span class="ot">=</span><span class="st"> </span><span class="fl">7.</span><span class="st">x-dev</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dt">core </span><span class="ot">=</span><span class="st"> </span><span class="fl">7.</span><span class="st">x</span></span></code></pre></div>
+</section>
+<section id="module.install" class="slide level2">
+<h2><code>module.install</code></h2>
+<p>Implements install and uninstall hooks.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_install<span class="ot">()</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    module_load_include<span class="ot">(</span><span class="st">&#39;inc&#39;</span><span class="ot">,</span> <span class="st">&#39;islandora&#39;</span><span class="ot">,</span> <span class="st">&#39;includes/solution_packs&#39;</span><span class="ot">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    islandora_install_solution_pack<span class="ot">(</span><span class="st">&#39;image_segmentation&#39;</span><span class="ot">);</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_uninstall<span class="ot">()</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    module_load_include<span class="ot">(</span><span class="st">&#39;inc&#39;</span><span class="ot">,</span> <span class="st">&#39;islandora&#39;</span><span class="ot">,</span> <span class="st">&#39;includes/solution_packs&#39;</span><span class="ot">);</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    islandora_install_solution_pack<span class="ot">(</span><span class="st">&#39;image_segmentation&#39;</span><span class="ot">,</span> <span class="st">&#39;uninstall&#39;</span><span class="ot">);</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="module.module" class="slide level2">
+<h2><code>module.module</code></h2>
+<ul>
+<li>Implement your main Islandora hooks here</li>
+<li>These hooks will be covered in further detail later in the document</li>
+<li>Yes the names get redicuously long</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_menu<span class="ot">()</span>{ <span class="st">...</span> }</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_theme<span class="ot">(</span><span class="kw">$existing</span><span class="ot">,</span> <span class="kw">$type</span><span class="ot">,</span> <span class="kw">$theme</span><span class="ot">,</span> <span class="kw">$path</span><span class="ot">)</span> { <span class="st">...</span> }</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_islandora_segmentedImageCModel_islandora_view_object<span class="ot">(</span><span class="kw">A</span>bstractObject <span class="kw">$object</span><span class="ot">,</span> <span class="kw">$user</span><span class="ot">,</span> <span class="kw">$page_number</span><span class="ot">)</span> { <span class="st">...</span> }</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_islandora_required_objects<span class="ot">(</span><span class="kw">I</span>slandoraTuque <span class="kw">$connection</span><span class="ot">)</span> { <span class="st">...</span> }</span></code></pre></div>
+</section>
+<section id="includes" class="slide level2">
+<h2><code>includes</code></h2>
+<p>Put all your workers here</p>
+</section>
+<section id="themes" class="slide level2">
+<h2><code>themes</code></h2>
+<p>Put your templates and preprocessors</p>
+<p>Put the required CSS and javascript files in <code>../css</code> and <code>../js</code></p>
+</section></section>
+<section>
+<section id="menus" class="title-slide slide level1">
+<h1>Menus</h1>
+
+</section>
+<section id="hook_menu" class="slide level2">
+<h2><code>hook_menu()</code></h2>
+<ul>
+<li>Returns an array of menus;</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_menu<span class="ot">()</span>{</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;admin/islandora/segmentation&#39;</span> =&gt; <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;title&#39;</span> =&gt; <span class="st">&#39;Image Segmentaion Module&#39;</span><span class="ot">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;description&#39;</span> =&gt; <span class="st">&#39;Configure the Image Segmentation solution pack.&#39;</span><span class="ot">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;page callback&#39;</span> =&gt; <span class="st">&#39;drupal_get_form&#39;</span><span class="ot">,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;access arguments&#39;</span> =&gt; <span class="kw">array</span><span class="ot">(</span><span class="st">&#39;administer site configuration&#39;</span><span class="ot">),</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;page arguments&#39;</span> =&gt; <span class="kw">array</span><span class="ot">(</span><span class="st">&#39;image_segmentation_admin&#39;</span><span class="ot">),</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;file&#39;</span> =&gt; <span class="st">&#39;includes/admin.form.inc&#39;</span><span class="ot">,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;type&#39;</span> =&gt; <span class="kw">MENU_NORMAL_ITEM</span><span class="ot">,</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="ot">),</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="ot">);</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="menu-entry" class="slide level2">
+<h2>Menu entry</h2>
+<ul>
+<li>Each menu is a PHP array</li>
+<li>Keys are paths which can include wildcards</li>
+<li>Full documentation can be found <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7.x">here</a></li>
+</ul>
+</section>
+<section id="menu-entry-key-value-pairs" class="slide level2">
+<h2>Menu entry key-value pairs</h2>
+<ul>
+<li><code>page callback</code>: the function to render the page</li>
+<li><code>page arguments</code>: an array of arguments sent to the callback</li>
+<li><code>access arguments</code>: passed to <code>access callback</code> to check for permission to use the menu. The callback defaults to</li>
+<li><code>file</code>: to include, allows other code to be used to handle the callback</li>
+<li><code>type</code>: the type of menu to display</li>
+</ul>
+</section>
+<section id="menu-type" class="slide level2">
+<h2>Menu type</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MENU_NORMAL_ITEM</td>
+<td style="text-align: right;">Regular menu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MENU_CALLBACK</td>
+<td style="text-align: right;">Non html menu</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MENU_LOCAL_TASK</td>
+<td style="text-align: right;">Typically shows up as a tab</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MENU_DEFAULT_LOCAL_TASK</td>
+<td style="text-align: right;">Shows up as the default tab</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MENU_LOCAL_ACTION</td>
+<td style="text-align: right;">Typically shows up as a link</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="drupal_get_form" class="slide level2">
+<h2><code>drupal_get_form()</code></h2>
+<ul>
+<li>A function to create a form.</li>
+<li>Takes a form_id as an argument</li>
+<li>Must implement the <code>hook_form()</code> to use</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>drupal_get_form<span class="ot">(</span><span class="st">&#39;my_form&#39;</span><span class="ot">);</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_form<span class="ot">(</span><span class="kw">array</span> <span class="kw">$form</span><span class="ot">,</span> <span class="kw">array</span> <span class="kw">$form_state</span><span class="ot">)</span> { <span class="st">...</span> }</span></code></pre></div>
+</section>
+<section id="form" class="slide level2">
+<h2>form</h2>
+<ul>
+<li>Returns an array of form items</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_example_form<span class="ot">(</span><span class="kw">$form</span><span class="ot">,</span> &amp;<span class="kw">$form_state</span><span class="ot">)</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$form</span><span class="ot">[</span><span class="st">&#39;title&#39;</span><span class="ot">]</span> = <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;#title&#39;</span> =&gt; t<span class="ot">(</span><span class="st">&#39;Title&#39;</span><span class="ot">),</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;#type&#39;</span> =&gt; <span class="st">&#39;textfield&#39;</span><span class="ot">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;#required&#39;</span> =&gt; <span class="kw">FALSE</span><span class="ot">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;#descritpion&#39;</span> =&gt; t<span class="ot">(</span><span class="st">&#39;Title of the segment&#39;</span><span class="ot">),</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;#default_value&#39;</span> =&gt; <span class="kw">isset</span><span class="ot">(</span><span class="kw">$form_state</span><span class="ot">[</span><span class="st">&#39;values&#39;</span><span class="ot">][</span><span class="st">&#39;title&#39;</span><span class="ot">])</span> <span class="ot">?</span> <span class="kw">$form_state</span><span class="ot">[</span><span class="st">&#39;values&#39;</span><span class="ot">][</span><span class="st">&#39;title&#39;</span><span class="ot">]</span> <span class="ot">:</span> <span class="st">&#39;New Object&#39;</span><span class="ot">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">);</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$form</span><span class="ot">[</span><span class="st">&#39;...&#39;</span><span class="ot">]</span> = <span class="kw">array</span><span class="ot">(</span> <span class="st">...</span> <span class="ot">);</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">...</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="kw">$form</span><span class="ot">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="form-validation-and-logic" class="slide level2">
+<h2>Form validation and logic</h2>
+<ul>
+<li>Hooks to validate and submit</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_example_form_validate<span class="ot">(</span><span class="kw">$form</span><span class="ot">,</span> &amp;<span class="kw">$form_state</span><span class="ot">)</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Validation logic.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_example_form_submit<span class="ot">(</span><span class="kw">$form</span><span class="ot">,</span> &amp;<span class="kw">$form_state</span><span class="ot">)</span> {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Submission logic.</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="some-form-item-types" class="slide level2">
+<h2>Some form item types</h2>
+<ul>
+<li>textfield</li>
+<li>textarea</li>
+<li>managed_file</li>
+<li>Documentation <a href="https://api.drupal.org/api/drupal/developer%21topics%21forms_api_reference.html/7.x">here</a></li>
+</ul>
+</section>
+<section id="config-forms" class="slide level2">
+<h2>Config forms</h2>
+<ul>
+<li>Return <a href="https://api.drupal.org/api/drupal/modules!system!system.module/function/system_settings_form/7.x"><code>system_settings_from($from)</code></a> to configure the system
+<ul>
+<li>Adds the submit button</li>
+<li>Stores the variables with <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/variable_set/7.x"><code>variable_set()</code></a></li>
+</ul></li>
+<li>Acces variables with <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/variable_get/7.x"><code>variable_get()</code></a></li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_settings_form<span class="ot">()</span>{</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$form</span> = <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;max_size&#39;</span> = <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;#type&#39;</span> =&gt; <span class="st">&#39;textfield&#39;</span><span class="ot">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;#title&#39;</span> =&gt; t<span class="ot">(</span><span class="st">&#39;Maximium size&#39;</span><span class="ot">),</span> <span class="ot">),);</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> system_settings_form<span class="ot">(</span><span class="kw">$form</span><span class="ot">);</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>} <span class="st">...</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">$size</span> = variable_get<span class="ot">(</span><span class="st">&#39;max_size&#39;</span><span class="ot">);</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="theming" class="title-slide slide level1">
+<h1>Theming</h1>
+
+</section>
+<section id="hook_theme" class="slide level2">
+<h2><a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_theme/7.x"><code>hook_theme()</code></a></h2>
+<ul>
+<li>Used to render an array as HTML</li>
+<li>Returns an array of theme items with the names of the themes</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> image_segmentation_theme<span class="ot">(</span><span class="kw">$existing</span><span class="ot">,</span> <span class="kw">$type</span><span class="ot">,</span> <span class="kw">$theme</span><span class="ot">,</span> <span class="kw">$path</span><span class="ot">)</span>{</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;image_segmentation_segment&#39;</span> =&gt; <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;file&#39;</span> =&gt; <span class="st">&#39;theme/theme.inc&#39;</span><span class="ot">,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;template&#39;</span> =&gt; <span class="st">&#39;theme/image-segmentation-segment&#39;</span><span class="ot">,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;pattern&#39;</span> =&gt; <span class="st">&#39;image_segmentation_sidebar__&#39;</span><span class="ot">,</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;variables&#39;</span> =&gt; <span class="kw">array</span><span class="ot">(</span><span class="st">&#39;object&#39;</span> =&gt; <span class="kw">NULL</span><span class="ot">),</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">);</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="theme-item-values" class="slide level2">
+<h2>Theme item values</h2>
+<ul>
+<li><code>file</code>: The file that implements the theme</li>
+<li><code>template</code>: The name of the template without extension</li>
+<li><code>variables</code>: An array of variables to be passed to the theme
+<ul>
+<li>The values get set when the theme is called</li>
+</ul></li>
+</ul>
+</section>
+<section id="template_preprocess_hook" class="slide level2">
+<h2><code>template_preprocess_hook()</code></h2>
+<ul>
+<li>Called before the theme is rendered</li>
+<li>Allows for the variables to be processed before rendering</li>
+<li>Accepts an array</li>
+<li>Returns the array that will be passed to the template</li>
+</ul>
+</section>
+<section id="preprocess-example" class="slide level2">
+<h2>Preprocess example</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> template_preprocess_image_segmentation_segment<span class="ot">(</span><span class="kw">array</span> &amp;<span class="kw">$variables</span><span class="ot">)</span> {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$object</span> = <span class="kw">$variables</span><span class="ot">[</span><span class="st">&#39;object&#39;</span><span class="ot">];</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> <span class="ot">(</span><span class="kw">isset</span><span class="ot">(</span><span class="kw">$object</span><span class="ot">[</span><span class="st">&#39;OBJ&#39;</span><span class="ot">]))</span> {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">$obj_url</span> = url<span class="ot">(</span><span class="st">&quot;islandora/object/</span><span class="kw">{$object-&gt;id}</span><span class="st">/datastream/OBJ/view&quot;</span><span class="ot">);</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">$params</span> = <span class="kw">array</span><span class="ot">(</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;title&#39;</span> =&gt; <span class="kw">$object</span>-&gt;label<span class="ot">,</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;path&#39;</span> =&gt; <span class="kw">$obj_url</span><span class="ot">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">);</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">$variables</span><span class="ot">[</span><span class="st">&#39;segment&#39;</span><span class="ot">]</span> = theme<span class="ot">(</span><span class="st">&#39;image&#39;</span><span class="ot">,</span> <span class="kw">$params</span><span class="ot">);</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="template" class="slide level2">
+<h2>Template</h2>
+<ul>
+<li>Uses PHPTemplate by default</li>
+<li>Name it <code>my-template.tpl.php</code> in <code>theme/</code></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;div <span class="kw">class</span>=<span class="st">&quot;image-segmentation-object islandora&quot;</span>&gt;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  &lt;div&gt;&lt;<span class="ot">?</span>php <span class="kw">print</span> <span class="kw">$segment</span> <span class="kw">?&gt;</span>&lt;/div&gt;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="ot">?</span>php <span class="kw">if</span> <span class="ot">(</span><span class="kw">isset</span><span class="ot">(</span><span class="kw">$object</span><span class="ot">[</span><span class="st">&#39;OCR&#39;</span><span class="ot">])):</span> <span class="kw">?&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>      &lt;div <span class="kw">class</span>=<span class="st">&quot;ocr content&quot;</span>&gt;</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>          &lt;h2&gt;<span class="kw">OCR</span>:&lt;/h2&gt;</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>          &lt;p&gt;&lt;<span class="ot">?</span>php <span class="kw">print</span> <span class="kw">$object</span><span class="ot">[</span><span class="st">&#39;OCR&#39;</span><span class="ot">]</span>-&gt;content <span class="kw">?&gt;</span>&lt;/p&gt;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      &lt;/div&gt;</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="ot">?</span>php <span class="kw">endif</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>&lt;/div&gt;</span></code></pre></div>
+</section>
+<section id="render-an-object" class="slide level2">
+<h2>Render an object</h2>
+<ul>
+<li>Implement <code>hook_cmodelPid_islandora_view_object()</code></li>
+<li>To use theme call <code>theme()</code></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> my_module_islandora_myCmodel_islandora_view_object<span class="ot">(</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">A</span>bstractObject <span class="kw">$object</span><span class="ot">,</span> <span class="kw">$user</span><span class="ot">,</span> <span class="kw">$page_number</span><span class="ot">)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">$output</span> = theme<span class="ot">(</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;image_segmentation_segment&#39;</span><span class="ot">,</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">array</span><span class="ot">(</span><span class="st">&#39;object&#39;</span> =&gt; <span class="kw">$object</span><span class="ot">));</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="kw">array</span><span class="ot">(</span><span class="st">&#39;&#39;</span> =&gt; <span class="kw">$output</span><span class="ot">);</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section></section>
+<section>
+<section id="end" class="title-slide slide level1">
+<h1>End</h1>
+
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://islandora.ca/sites/default/files/How%20to%20make%20a%20Solution%20Pack.pdf">How to make a solution pack</a></li>
+<li><a href="https://github.com/Islandora-Labs/islandora_dev101">Islandora 101</a></li>
+<li><a href="https://github.com/Islandora/islandora/wiki/Working-With-Fedora-Objects-Programmatically-Via-Tuque">Islandora and Tuque</a></li>
+<li><a href="https://api.drupal.org/api/drupal/7.x">Drupal 7 API</a></li>
+<li><a href="https://www.drupal.org/docs/7">Drupal 7 docs</a></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  // reveal.js plugins
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

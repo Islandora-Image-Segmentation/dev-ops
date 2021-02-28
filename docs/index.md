@@ -1,4 +1,7 @@
+---
+layout: default
+---
 # How to use Islandora
 
-- [Markdown document](presentation.md)
+- [Markdown document](islandora-howto.md)
 - [React JS presentation](presentation.js)

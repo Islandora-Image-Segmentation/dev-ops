@@ -17,16 +17,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
   config.vm.provider "virtualbox" do |v|
     v.name = "Islandora 7.x-1.x Newspaper Development Base VM"
+  end
 
   config.vm.synced_folder "./", "/vagrant", disabled:true
   config.vm.synced_folder "data/ingest/", "/data"
   config.vm.synced_folder "vagrant/", "/vagrant"
-  end
 
   config.vm.hostname = $hostname
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.box_version = "202005.21.0"
 
 
   # This checks and updates VirtualBox Guest Additions.
@@ -45,6 +46,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", $memory]
     vb.customize ["modifyvm", :id, "--cpus", $cpus]
+  end
+
+  config.vm.provider "hyperv" do |h|
+    h.vmname = "Islandora 7.x-1.x Newspaper Development Base VM"
+    h.cpus = $cpus
+    h.memory = $memory
   end
 
   shared_dir = "/vagrant"
